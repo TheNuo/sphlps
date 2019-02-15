@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_pagination %}
+
+{% block body %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>客户标识</th>
+        <th>客户编码</th>
+        <th>客户名称</th>
+        <th>行政区域</th>
+        <th>档案编号</th>
+        <th>联系人</th>
+        <th>联系电话</th>
+    </tr>
+    <tbody>
+    {% for customer in pagination.items %}
+    <tr>
+        <td>{{ customer.number }}</td>
+        <td>{{ customer.code }}</td>
+        <td><a href="{{ url_for('customer.detail', customer_id=customer.id) }}">{{ customer.name }}</a></td>
+        <td>{{ customer.area }}</td>
+        <td>{{ customer.archives}}</td>
+        <td>{{ customer.contacts }}</td>
+        <td>{{ customer.phone_number }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </thead>
+</table>
+<!-- 使用 macro 渲染分页 -->
+{{ render_pagination(pagination, 'admin.news') }}
+{% endblock %}

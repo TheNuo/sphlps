@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_form %}
+
+{% block body %}
+<h4>客户文件修改</h4>
+{{ render_form(form, url_for('customer.edit_customer_file', customer_file_id=customer_file.id)) }}
+{% endblock %}

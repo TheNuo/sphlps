@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h2>{{ news.name }}</h2>
+        <h3>{{ news.description }}</h3>
+    </div>
+    <div class="row">
+        <div class="news-content">
+            <h4>{{ news.content }}</h4>
+            {% if news.image %}
+                <img class="news-image" src="{{ url_for('static', filename=news.image) }}">
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

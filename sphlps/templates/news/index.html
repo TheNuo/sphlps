@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_pagination %}
+
+{% block body %}
+    <div class="news-list">
+        <ul>
+            <!-- 从 pagination 对象获取 items -->
+            {% for news in pagination.items %}
+                <li><a href="{{ url_for('news.detail', news_id=news.id) }}">{{ news.name }} - {{ news.description }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- 使用 macro 渲染分页组件 -->
+    {{ render_pagination(pagination, 'news.index') }}
+{% endblock %}

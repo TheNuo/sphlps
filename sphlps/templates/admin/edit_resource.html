@@ -1,0 +1,7 @@
+{% extends "admin/index.html" %}
+{% from "macros.html" import render_form %}
+
+{% block admin %}
+<h4>修改文件</h4>
+{{ render_form(form, url_for('admin.edit_resource', resource_id=resource.id)) }}
+{% endblock %}

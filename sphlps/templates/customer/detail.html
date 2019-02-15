@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% from "macros.html" import render_form %}
+
+{% block body %}
+<div class="jumbotron">
+    <h2>{{ customer.name }}</h2>
+    <h3>
+        {{ customer.code }} & {{ customer.contacts }} - {{ customer.phone_number }}
+    </h3>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        {% block admin %}
+            {{ render_form(form, url_for('customer.detail', customer_id=customer.id)) }}
+        {% endblock %}
+    </div>
+    <div class="col-md-9">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>文件类型</th>
+                <th>文件名</th>
+                <th>操作</th>
+            </tr>
+            <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file.type }}</td>
+                <td><a href="{{ url_for('customer.customer_file', filename=file.filename) }}">{{ file.filename }}</a></td>
+                <td>
+                    <!-- 使用了俩个 Bootstrap 的 icon 代表编辑和删除操作 -->
+                    <div class="btn-group" role="group">
+                        <a href="{{ url_for('customer.edit_customer_file', customer_file_id=file.id) }}" type="button" class="btn btn-default" title＝"编辑">
+                        <span class="glyphicon glyphicon-pencil" title＝"编辑" aria-hidden="true"></span>
+                        </a>
+                        <a href="{{ url_for('customer.delete_customer_file', customer_file_id=file.id) }}" type="button" class="btn btn-default" title＝"删除">
+                        <span class="glyphicon glyphicon-trash" title＝"删除" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            </thead>
+        </table>
+    </div>
+</div>
+{% endblock %}

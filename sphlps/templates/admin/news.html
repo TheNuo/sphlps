@@ -1,0 +1,42 @@
+{% extends "admin/index.html" %}
+{% from "macros.html" import render_pagination %}
+
+{% block operation %}
+<a href="{{ url_for('admin.create_news') }}" type="button" class="btn btn-primary">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    添加新闻
+</a>
+{% endblock %}
+
+{% block admin %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>操作</th>
+        </tr>
+        <tbody>
+            {% for news in pagination.items %}
+                <tr>
+                    <td>{{ news.id }}</td>
+                    <td>{{ news.name }}</td>
+                    <td>
+                        <!-- 使用了俩个 Bootstrap 的 icon 代表编辑和删除操作 -->
+                        <div class="btn-group" role="group">
+                            <a href="{{ url_for('admin.edit_news', news_id=news.id) }}" type="button" class="btn btn-default" title＝"编辑">
+                                <span class="glyphicon glyphicon-pencil" title＝"编辑" aria-hidden="true"></span>
+                            </a>
+                            <a href="{{ url_for('admin.delete_news', news_id=news.id) }}" type="button" class="btn btn-default" title＝"删除">
+                                <span class="glyphicon glyphicon-trash" title＝"删除" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+<!-- 使用 macro 渲染分页 -->
+{{ render_pagination(pagination, 'admin.news') }}
+{% endblock %}

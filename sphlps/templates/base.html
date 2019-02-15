@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+    <head>
+        <meta charset="UTF-8">
+        <title>上药控股六盘水有限公司</title>
+        <!-- css 文件引入区域 -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"> <!-- 引入 main 自定 css 文件 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> <!-- 引入 Bootstrap 组件 css 文件 -->
+        <!-- css 文件引入结束 -->
+    </head>
+    <body>
+        <!-- 导航栏 -->
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">SPHLPS</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ url_for('news.index') }}">新闻</a></li>
+                        <li><a href="http://www.gzhqyy.cn/lpsindex.html">B2B电子商务平台</a></li>
+                        {% if current_user.is_authenticated and current_user.is_staff %}
+                        <li><a href="{{ url_for('resource.index') }}">资源下载</a></li>
+                        {% endif %}
+                        {% if current_user.is_authenticated and current_user.is_staff %}
+                            <li><a href="{{ url_for('customer.index') }}">客户</a></li>
+                        {% endif %}
+                        {% if current_user.is_authenticated and current_user.is_admin %}
+                            <li><a href="{{ url_for('admin.index') }}">控制台</a></li>
+                        {% endif %}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if not current_user.is_authenticated %} <!-- 判断当前用户是否登录 -->
+                            <li><a href="{{ url_for('front.register') }}">注册</a></li>
+                            <li><a href="{{ url_for('front.login') }}">登录</a></li>
+                        {% else %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="false">
+                                {{ current_user.username }}<span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">个人主页</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{ url_for('front.logout') }}">退出登录</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <!-- 导航栏结束 -->
+        <div class="container"> <!-- Bootstrap 的 container -->
+            <!-- flash 消息展示 -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <!-- flash 消息展示结束 -->
+            {% block body %}{% endblock %} <!-- body 继承接口 -->
+            <div class="footer">
+                <h5>网站内容版权归上药控股六盘水有限公司所有, web应用所有代码版权归作者所有. Copyright © 2019 by KRzhao</h5>
+            </div>
+        </div>
+        <!-- js 文件引入区域 -->
+        <script src="{{ url_for('static', filename='main.js') }}"></script> <!-- 引入 main 自定 js 文件 -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script> <!-- Bootstrap 依赖 jQuery -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> <!-- 引入 Bootstrap 核心 js 文件 -->
+        <!-- js 文件引入结束 -->
+    </body>
+</html>

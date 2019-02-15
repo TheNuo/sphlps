@@ -1,0 +1,44 @@
+{% extends "admin/index.html" %}
+{% from "macros.html" import render_pagination %}
+
+{% block operation %}
+<a href="{{ url_for('admin.create_customer') }}" type="button" class="btn btn-primary">
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    添加客户
+</a>
+{% endblock %}
+
+{% block admin %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>客户标识</th>
+        <th>客户编码</th>
+        <th>客户名称</th>
+        <th>操作</th>
+    </tr>
+    <tbody>
+    {% for customer in pagination.items %}
+    <tr>
+        <td>{{ customer.number }}</td>
+        <td>{{ customer.code }}</td>
+        <td>{{ customer.name }}</td>
+        <td>
+            <!-- 使用了俩个 Bootstrap 的 icon 代表编辑和删除操作 -->
+            <div class="btn-group" role="group">
+                <a href="{{ url_for('admin.edit_customer', customer_id=customer.id) }}" type="button" class="btn btn-default" title＝"编辑">
+                <span class="glyphicon glyphicon-pencil" title＝"编辑" aria-hidden="true"></span>
+                </a>
+                <a href="{{ url_for('admin.delete_customer', customer_id=customer.id) }}" type="button" class="btn btn-default" title＝"删除">
+                <span class="glyphicon glyphicon-trash" title＝"删除" aria-hidden="true"></span>
+                </a>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </thead>
+</table>
+<!-- 使用 macro 渲染分页 -->
+{{ render_pagination(pagination, 'admin.news') }}
+{% endblock %}
